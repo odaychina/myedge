@@ -33,7 +33,7 @@ jobs:
           fi
           # 2. 读取上次同步记录的 SHA
           LOCAL_SHA=""
-          [ -f ".sync_sha" ] && LOCAL_SHA=$(cat .sync_sha)
+          [ -f ".sy_sha" ] && LOCAL_SHA=$(cat .sy_sha)
           echo "Remote SHA: ${REMOTE_SHA:0:7} | Local SHA: ${LOCAL_SHA:0:7}"
           # 3. 比较
           if [ "$REMOTE_SHA" = "$LOCAL_SHA" ]; then
@@ -81,7 +81,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo "${{ steps.check_update.outputs.NEW_SHA }}" > .sync_sha
-          git add .sync_sha _worker.js
+          echo "${{ steps.check_update.outputs.NEW_SHA }}" > .sy_sha
+          git add .sy_sha _worker.js
           git commit -m "chore: sync worker from ${{ env.REPO }}@${{ steps.check_update.outputs.NEW_SHA }}"
           git push origin main
